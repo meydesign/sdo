@@ -1,5 +1,5 @@
 mixin searchTabSaleDetails(tabId)
-  div(id= tabId)
+  div.col-sm-12(id= tabId)
     .form-group
       label SDO ID
       input.form-control(name='sdoId', type='text')
@@ -20,3 +20,13 @@ mixin searchTabSaleDetails(tabId)
       label Sold Price
       input.form-control(name='sold-price-from', type='number')
       input.form-control(name='sold-price-to', type='number')
+
+    .form-group
+      label Sold Date
+      input.form-control(name='sold-date-from', type='date')
+      input.form-control(name='sold-date-to', type='date')
+        
+    .from-group
+      label Transfer Date
+      input.form-control(name='transfer-date-from', type='date')
+      input.form-control(name='transfer-date-to', type='date')
