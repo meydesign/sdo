@@ -1,0 +1,63 @@
+extends layout
+include ./mixins/states
+
+block scripts
+  
+block content
+  .row
+    .col-sm-8.col-sm-offset-2
+      h1 Register
+      form#registration_form
+        .form-group
+          label Name
+          input.form-control(type='text', name='name')
+            
+        .form-group
+          label Street 1
+          input.form-control(type='text', name='street1')
+      
+        .form-group
+          label street2
+          input.form-control(type='text', name='street2')
+            
+        .form-group
+          label City
+          input.form-control(type='text', name='city')
+            
+        .form-group
+          label State
+          +states('state', 'registration_state')
+            
+        .form-group
+          label Phone
+          input.form-control(type='text', name='phone')
+
+        .form-group
+          label Email
+          input.form-control(type='email', name='email')
+            
+        .form-group
+          label Confirm Email
+          input.form-control(type='email', name='confirm-email')
+        
+        .form-group
+          label Password
+          input.form-control(type='password', name='password')
+            
+        .form-group
+          label Confirm Password
+          input.form-control(type='password', name='confirm-password')
+            
+        
+        ul
+          li I accept the User Agreement and Privacy Policy.
+          li I may receive communications from SalesDisclosuresOnline.com and it's administrators.
+          li I'm at least 18 years old.
+
+        .form-group
+          label
+            input(type='checkbox', name='agree-to-terms')
+            | &nbsp;Agree to terms
+            
+        .form-group
+            button.btn.btn-primary(type='submit') Register

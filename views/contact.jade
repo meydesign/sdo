@@ -1,0 +1,28 @@
+extends layout
+
+block scripts
+
+block content
+  .row
+    .col-sm-10.col-sm-offset-1
+      h1 Contact
+      form#contact_form
+        .form-group
+          label To
+          select.form-control(name='to')
+            option General Inquiries
+        
+        .form-group
+          label Name
+          input.form-control(type='text', name='name')
+          
+        .form-group
+          label E-mail
+          input.form-control(type='email', name='email')
+        
+        .form-group
+          label Message
+          textarea.form-control(rows='3', name='message')
+  
+        .form-group
+          button.btn.btn-primary(type='submit') send
