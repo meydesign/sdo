@@ -23,7 +23,10 @@ router.get('/login', function loginCallback(req, res, next) {
 });
 
 router.get('/register', function registerCallback(req, res, next) {
-  res.render('register', { title: 'Registration' } );
+  res.render('register', { title: 'Registration' });
 });
 
+router.get('/search', function searchCallback(req, res, next) {
+  res.render('search', { title: 'Search' });
+});
 module.exports = router;

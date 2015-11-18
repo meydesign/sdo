@@ -1,0 +1,22 @@
+mixin searchTabSaleDetails(tabId)
+  div(id= tabId)
+    .form-group
+      label SDO ID
+      input.form-control(name='sdoId', type='text')
+    
+    .form-group
+      label SDF ID
+      input.form-control(name='sdfId', type='text')
+        
+    .form-group
+      label Parcel #
+      input.form-control(name='parcel', type='text')
+        
+    .form-group
+      label Legacy Parcel #
+      input.form-control(name='legacy-parcel', type='text')
+        
+    .form-group
+      label Sold Price
+      input.form-control(name='sold-price-from', type='number')
+      input.form-control(name='sold-price-to', type='number')

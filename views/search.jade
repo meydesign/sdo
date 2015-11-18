@@ -1,0 +1,24 @@
+extends layout
+include ./mixins/searchTabSaleDetails
+
+block scripts
+  script.
+    $('#test > li > a').click(function clickCallback(e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+
+block content
+  .row
+    .col-sm-12
+      ul.nav.nav-tabs#test
+        li.active(role='presentation')
+          a(href='#tab_1', aria-controls='tab_1', data-toggle='tab') Sale Details
+        li(role='presentaion', aria-controls='tab_2', data-toggle='tab')
+          a(href='#tab_2') Property Details
+            
+      .tab-content
+        #tab_1.tab-pane.active(role='tabpanel')
+          +searchTabSaleDetails()
+          
+        #tab_2.tab-pane(role='tabpanel')
