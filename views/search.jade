@@ -1,5 +1,7 @@
 extends layout
 include ./mixins/searchTabSaleDetails
+include ./mixins/searchTabPropertyDetails
+include ./mixins/searchTabSellerBuyerDetails
 
 block scripts
   script.
@@ -8,17 +10,34 @@ block scripts
       $(this).tab('show');
     });
 
+    $('#search_reset').click(function clickCallback() {
+      document.getElementById('search_form').reset();
+    });
+
 block content
   .row
     .col-sm-12
-      ul.nav.nav-tabs#test
+      ul.nav.nav-tabs#test(style='margin-top: 20px;')
         li.active(role='presentation')
           a(href='#tab_1', aria-controls='tab_1', data-toggle='tab') Sale Details
         li(role='presentaion', aria-controls='tab_2', data-toggle='tab')
           a(href='#tab_2') Property Details
+        li(role='presentaion', aria-controls='tab_3', data-toggle='tab')
+          a(href='#tab_3') Seller / Buyer / Preparer Details
             
       .tab-content
-        #tab_1.tab-pane.active(role='tabpanel')
-          +searchTabSaleDetails()
+        form#search_form  
+          #tab_1.tab-pane.active(role='tabpanel')
+            +searchTabSaleDetails()
           
-        #tab_2.tab-pane(role='tabpanel')
+          #tab_2.tab-pane(role='tabpanel')
+            +searchTabPropertyDetails()
+
+          #tab_3.tab-pane(role='tabpanel')
+            +searchTabSellerBuyerDetails()
+          
+          .form-group
+            button#search_submit.btn.btn-primary(type='submit') search
+            button#search_reset.btn.btn-default(type='button') reset
+
+        

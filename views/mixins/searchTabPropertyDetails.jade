@@ -1,0 +1,110 @@
+include ./countries
+include ./states
+include ./propertyRange
+
+mixin searchTabPropertyDetails(tabId)
+  .col-sm-12(id= tabId)
+    .form-group
+      label Country
+      +countries('country', 'search_prop_contry')
+
+    .form-group
+      label Tax District
+      select.form-control(name='tax_district')
+        option(value='any') Any
+    
+    .form-group
+      label Street
+      input.form-control(type='text', name='street')
+        
+    .form-group
+      label City
+      input.form-control(type='text', name='city')
+        
+    .form-group
+      label State
+      +states('state', 'search_prop_state')
+      
+    .form-group
+      label Zipcode
+      input.form-control(type='text', name='search_prop_zip_1')
+      input.form-control(type='text', name='search_prop_zip_2')
+        
+    .form-group
+      label Acreage
+      input.form-control(type='text', name='search_prop_acreage_1')
+      input.form-control(type='text', name='search_prop_acreage_2')
+        
+    .form-group
+      label Legal Description
+      input.form-control(type='text', name='legal_description')
+        
+    .form-group
+      label Homestead
+      select.form-control(name='homestead')
+        option(value='any') Any
+        option(value='true') True
+        option(value='false') False
+
+    .form-group
+      label Valid for Trending
+      select.form-control(name='valid_trending')
+        option(value='any') Any
+        option(value='true') True
+        option(value='false') False
+        
+    .form-group
+      label Property Class Codes (Group)
+      br
+      label.checkbox-inline
+        input#group1(value='', type='checkbox')
+        | Ag Improved
+        
+      label.checkbox-inline
+        input#group2(value='', type='checkbox')
+        | Ag Land
+        
+      label.checkbox-inline
+        input#group3(value='', type='checkbox')
+        | Comm Improved
+        
+      label.checkbox-inline
+        input#group4(value='', type='checkbox')
+        | Comm Unimproved
+        
+      label.checkbox-inline
+        input#group5(value='', type='checkbox')
+        | Exempt
+        
+      label.checkbox-inline
+        input#group6(value='', type='checkbox')
+        | Ind Improved
+        
+      label.checkbox-inline
+        input#group7(value='', type='checkbox')
+        | Ind Unimproved
+        
+      label.checkbox-inline
+        input#group8(value='', type='checkbox')
+        | Mineral Rights
+        
+      label.checkbox-inline
+        input#group9(value='', type='checkbox')
+        | Res Improved
+        
+      label.checkbox-inline
+        input#group10(value='', type='checkbox')
+        | Res unimproved
+        
+      label.checkbox-inline
+        input#group11(value='', type='checkbox')
+        | Unassigned
+        
+      label.checkbox-inline
+        input#group12(value='', type='checkbox')
+        | Utility
+
+      .form-group
+        label Range
+        +propertyRange('search_prop_range_1', 'search_prop_range_1')
+        +propertyRange('search_prop_range_2', 'search_prop_range_2')
