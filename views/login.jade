@@ -6,7 +6,7 @@ block content
   .row
     .col-sm-6.col-sm-offset-3
       h1 Login
-      form#login_form
+      form#login_form(action='/api/security/login', method='post')
         .form-group
           label Email
           input.form-control(type='email', name='email')

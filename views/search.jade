@@ -4,40 +4,62 @@ include ./mixins/searchTabPropertyDetails
 include ./mixins/searchTabSellerBuyerDetails
 
 block scripts
-  script.
-    $('#test > li > a').click(function clickCallback(e) {
-      e.preventDefault();
-      $(this).tab('show');
-    });
-
-    $('#search_reset').click(function clickCallback() {
-      document.getElementById('search_form').reset();
-    });
-
+  script(src='../javascripts/search.js')
+    
 block content
   .row
     .col-sm-12
-      ul.nav.nav-tabs#test(style='margin-top: 20px;')
-        li.active(role='presentation')
-          a(href='#tab_1', aria-controls='tab_1', data-toggle='tab') Sale Details
-        li(role='presentaion', aria-controls='tab_2', data-toggle='tab')
-          a(href='#tab_2') Property Details
-        li(role='presentaion', aria-controls='tab_3', data-toggle='tab')
-          a(href='#tab_3') Seller / Buyer / Preparer Details
+      form#search_form
+        ul.nav.nav-tabs.nav-justified(style='margin-top: 20px;')
+          li.active(role='presentation')
+            a(href='#tab_1', aria-controls='tab_1', data-toggle='tab') 
+              span.glyphicon.glyphicon-usd
+              | &nbsp;Sale Details
+          li(role='presentaion', aria-controls='tab_2', data-toggle='tab')
+            a(href='#tab_2') 
+              span.glyphicon.glyphicon-home
+              | &nbsp;Property Details
+          li(role='presentaion', aria-controls='tab_3', data-toggle='tab')
+            a(href='#tab_3')
+              span.glyphicon.glyphicon-user
+              | &nbsp;Seller / Buyer / Preparer Details
+              
+        .tab-content
             
-      .tab-content
-        form#search_form  
           #tab_1.tab-pane.active(role='tabpanel')
             +searchTabSaleDetails()
-          
+            
           #tab_2.tab-pane(role='tabpanel')
             +searchTabPropertyDetails()
 
           #tab_3.tab-pane(role='tabpanel')
             +searchTabSellerBuyerDetails()
-          
-          .form-group
-            button#search_submit.btn.btn-primary(type='submit') search
-            button#search_reset.btn.btn-default(type='button') reset
+        
+
+          .col-sm-12
+            .form-group.pull-right
+              button#search_submit.btn.btn-primary(type='submit') search
+              | &nbsp;
+              button#search_reset.btn.btn-default(type='button') reset
 
         
+  .row
+    .col-sm-12
+      .panel.panel-success.with-actions
+        .panel-heading
+          .caption
+            h3.panel-title Search Results:
+          .tools
+            button.btn.btn-success.btn-sm.pull-right(type='button') export to Excel
+        .panel-body
+          table#search_table.table.table-bordered.table-striped
+            thead
+              tr
+                th
+                th Address
+                th Sold Date
+                th Sold Price
+                th Buyers
+                th Sellers
+                th
+            tbody

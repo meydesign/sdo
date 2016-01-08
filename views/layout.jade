@@ -7,8 +7,9 @@ html(lang='en')
     title= title
     
     //- stylesheets
-    link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', type='text/css', href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='//cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
 
   body(style='padding-top: 50px;')
 
@@ -30,7 +31,7 @@ html(lang='en')
             li
               a(href='#news') News
             li
-              a(href='/search') Search
+              a(href='/sdo/search') Search
             li
               a(href='#dashboard') Dashboard
             li
@@ -38,19 +39,24 @@ html(lang='en')
             li
               a(href='/help') Help
           ul.nav.navbar-nav.navbar-right
-            li
-              a(href='/login') Login
-            li
-              a(href='/register') Register
+            if (!user.isAuth)
+              li
+                a(href='/login') Login
+              li
+                a(href='/register') Register
+            if (user.isAuth)
+              li
+                a(href='/api/security/logout') Logout
     
     .clearfix
     
     .page-container
-      .sidebar-wrapper.hidden-xs
-        .sidebar
-          ul.nav.nav-sidebar
-            li.active
-              a(href='#') Dashboard
+      if (user.isAuth)
+        .sidebar-wrapper.hidden-xs
+          .sidebar
+            ul.nav.nav-sidebar
+              li.active
+                a(href='#') Dashboard
 
       .content-wrapper
         .container-fluid.page-content
@@ -63,4 +69,10 @@ html(lang='en')
     //- scripts
     script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.62/jquery.inputmask.bundle.min.js')
+    script(src='//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js')
+    script(src='//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js')
+    script(src='//cdn.datatables.net/responsive/1.0.4/js/dataTables.responsive.min.js')
+    script(src='../javascripts/general.js')
     block scripts

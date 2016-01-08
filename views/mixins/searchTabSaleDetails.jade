@@ -1,32 +1,47 @@
 mixin searchTabSaleDetails(tabId)
-  div.col-sm-12(id= tabId)
-    .form-group
-      label SDO ID
-      input.form-control(name='sdoId', type='text')
+  .col-sm-12(id= tabId)
     
-    .form-group
-      label SDF ID
-      input.form-control(name='sdfId', type='text')
+    .row
+      .form-group.col-sm-6.col-md-4.col-lg-3
+        label SDO ID
+        input.form-control.input-sm(name='sdoId', type='text')
+      
+      .form-group.col-sm-6.col-md-4.col-lg-3
+        label SDF ID
+        input.form-control.input-sm(name='sdfId', type='text')
+          
+      .form-group.col-sm-6.col-md-4.col-lg-3
+        label Parcel #
+        input.form-control.input-sm(name='parcel', type='text')
         
-    .form-group
-      label Parcel #
-      input.form-control(name='parcel', type='text')
-        
-    .form-group
-      label Legacy Parcel #
-      input.form-control(name='legacy-parcel', type='text')
-        
-    .form-group
-      label Sold Price
-      input.form-control(name='sold-price-from', type='number')
-      input.form-control(name='sold-price-to', type='number')
+      .form-group.col-sm-6.col-md-4.col-lg-3
+        label Legacy Parcel #
+        input.form-control.input-sm(name='legacy_parcel', type='text')
+    
+   
+      .form-group.col-sm-6.col-md-4.col-lg-3
+        label Sold Price
+        .input-group.input-group-sm
+          input.form-control.range-input(name='sold_price_from', type='text')
+          .input-group-btn
+            .range-divider
+              | -
+          input.form-control.range-input(name='sold_price_to', type='text')
 
-    .form-group
-      label Sold Date
-      input.form-control(name='sold-date-from', type='date')
-      input.form-control(name='sold-date-to', type='date')
-        
-    .from-group
-      label Transfer Date
-      input.form-control(name='transfer-date-from', type='date')
-      input.form-control(name='transfer-date-to', type='date')
+      .form-group.col-sm-6.col-md-4.col-lg-3
+        label Sold Date
+        .input-group.input-group-sm
+          input.form-control.range-input(name='sold_date_from', type='text')
+          .input-group-btn
+            .range-divider
+              | -
+          input.form-control.range-input(name='sold_date_to', type='text')
+          
+      .from-group.col-sm-6.col-md-4.col-lg-3
+        label Transfer Date
+        .input-group.input-group-sm
+          input.form-control.range-input(name='transfer_date_from', type='text')
+          .input-group-btn
+            .range-divider
+              | -
+          input.form-control.range-input(name='transfer_date_to', type='text')

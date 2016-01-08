@@ -1,6 +1,6 @@
-mixin propertyRange(selectName, selectId)
-  select.form-control(name= selectName, id= selectId)
-    option(value='0', selected='selected') 0 - Unassigned
+mixin propertyRange(selectName, selectId, isSelected)
+  select.form-control.input-sm(name= selectName, id= selectId)
+    option(value='0', selected=isSelected == 0) 0 - Unassigned
     option(value='100') 100 - Vacant Land-Ag
     option(value='101') 101 - Cash Grain/General Farm
     option(value='102') 102 - Livestock Other Than Dairy and Poultry
@@ -156,4 +156,4 @@ mixin propertyRange(selectName, selectId)
     option(value='865') 865 - Telephone, Telegraph, or Cable Company, Ind locally assessed
     option(value='870') 870 - Water Distribution Company, Comm locally assessed
     option(value='871') 871 - Utility, Water R-O-W State Assessed
-    option(value='875') 875 - Water Distribution Company, Ind locally assessed
+    option(value='875', selected=isSelected == 875) 875 - Water Distribution Company, Ind locally assessed

@@ -6,25 +6,15 @@ body {
   background-color: #f1f1f1;
   padding-bottom: 60px;
   height: 100%;
-  /*height: 100%;*/
-  /*padding-bottom: 60px;
-  height: 100%;*/
 }
 
 .page-container {
-  /*position: relative;
-  height: 100%;*/
-  height: 100%;
+  width: 100%;
   margin: 0px;
   padding: 0px;
-  overflow-y: scroll;
+  min-height: 100%;
+  background-color: #FFFFFF;
 }
-
-/*.page-container::after,
-.page-container::before {
-  content: " ";
-  display: table;
-}*/
 
 .content-wrapper {
   height: 100%;
@@ -43,16 +33,54 @@ body {
 
 .page-content {
   margin-left: 235px;
-  background-color: #FFFFFF;
+  /*background-color: #FFFFFF;*/
   min-height: 100%;
 }
 
 .footer {
-  /*position: absolute;
-  bottom: 0px;*/
   width: 100%;
   height: 60px;
   background-color: #33ffff;
+}
+
+
+/* panel styles */
+.panel.with-actions > .panel-heading:after {
+  clear: both;
+}
+
+.panel.with-actions > .panel-heading:after,
+.panel.with-actions > .panel-heading:before {
+  content: " ";
+  display: table;
+}
+
+.panel.with-actions > .panel-heading > .caption {
+  float: left;
+  display: inline-block;
+
+}
+
+.panel.with-actions > .panel-heading > .tools {
+    float: right;
+    display: inline-block;
+}
+
+
+/* new input styles */
+.range-input {
+  display: inline-block;
+}
+
+.range-divider {
+  width: 29px;
+  font-size: 10px;
+  text-align: center;
+}
+
+/* jQuery datatable's style*/
+.dataTables_empty {
+    text-align: center;
 }
 
 @media (max-width: 991px) {
