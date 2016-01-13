@@ -4,15 +4,15 @@ mixin searchTabSaleDetails(tabId)
     .row
       .form-group.col-sm-6.col-md-4.col-lg-3
         label SDO ID
-        input.form-control.input-sm(name='sdoId', type='text')
+        input.form-control.input-sm(name='sdoId', type='text', maxlength='9')
       
       .form-group.col-sm-6.col-md-4.col-lg-3
         label SDF ID
-        input.form-control.input-sm(name='sdfId', type='text')
+        input.form-control.input-sm(name='sdfId', type='text', maxlength='14')
           
       .form-group.col-sm-6.col-md-4.col-lg-3
         label Parcel #
-        input.form-control.input-sm(name='parcel', type='text')
+        input.form-control.input-sm(name='parcel', type='text', maxlength='26')
         
       .form-group.col-sm-6.col-md-4.col-lg-3
         label Legacy Parcel #

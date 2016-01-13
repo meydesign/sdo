@@ -51,8 +51,7 @@ app.use(passport.session());
 // Front-End Local Variables
 app.use(function declareFrontEndVariables(req, res, next) {
   res.locals.user = { isAuth: false };
-  
-  // console.log(req);
+
   if (req.isAuthenticated()) {
     res.locals.user.isAuth = true;
     res.locals.user.info = req.user.userData;

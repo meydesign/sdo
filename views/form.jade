@@ -1,0 +1,529 @@
+<html>
+	<head>
+		<title>Sales Disclosures Online :: Display Form</title>
+		<style type="text/css">
+			div[class="Sect"] {
+				margin			: 0px 30px 0px 30px;
+			}
+			
+			table {
+				color			: #000000;
+				font			: normal 10px/11px 'serif', 'Cambria';
+			}
+			
+			#form_header {
+				width			: 100%;
+				margin			: 0px 0px 10px 0px;
+				color			: #000000;
+				font			: normal 10px/11px 'serif', 'Cambria';
+			}
+			
+			#form_header td.image {
+				width			: 75px;
+				text-align		: center;
+				vertical-align	: middle;
+			}
+			
+			#form_header td.text {
+				width			: auto;
+				text-align		: left;
+				vertical-align	: middle;
+			}
+			
+			#form_section {
+				width			: 100%;
+				margin			: 0px 0px 25px 0px;
+				padding			: 0px 0px 0px 0px;
+				color			: #000000;
+				font			: normal 10px/11px 'serif', 'Cambria';
+				background		: #EEEEEE;
+				border			: 1px solid #000000;
+			}
+			
+			#form_section td {
+				margin			: 0px 0px 0px 0px;
+				padding			: 5px 0px 5px 0px;
+			}
+			
+			#form_section table {
+				width			: 100%;
+				margin			: 0px 0px 0px 0px;
+				color			: #000000;
+				font			: normal 10px/11px 'serif', 'Cambria';
+			}
+			
+			#form_section .header {
+				background		: #CCCCCC;
+				font			: normal 12px/14px 'serif', 'Cambria';
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div class="Sect">
+    
+		    <!-- HEADER -->
+		    <table id="form_header" cellpadding="0" cellspacing="0" border="0">
+		        <tr>
+		            <td class="image"><img width="75" height="72" src="/assets/images/46021_img_0.jpg" /></td>
+		            <td class="text">
+		                SALES DISCLOSURE FORM<br />
+		                <br />
+		                Prescribed by Department of Local Government Finance Pursuant to IC 6-1.1-5.5<br />
+		                <br />
+		                <strong>PRIVACY NOTICE: The telephone numbers and Social Security numbers of the parties on this form are confidential according to IC 61.15.53(d).</strong>
+		            </td>
+		        </tr>
+		    </table>
+		    
+		    <cfquery name="dsSDO_Parcels" dataSource="salesdisclosuresonline">
+		        SELECT				*
+		        FROM				[tbl_search_parcel]
+		        WHERE				fkSaleID = <cfqueryparam  CFSQLType="CF_SQL_INTEGER" value="#URL.SaleID#">
+		    </cfquery>
+		    
+		    <!-- CONTENT -->
+		    <table id="form_section" cellpadding="0" cellspacing="0" border="0">
+		        <tr>
+		            <td colspan="8" class="header" style="border-bottom: 1px solid #000000; padding:10px;">
+		                A. PROPERTY TRANSFERRED
+		            </td>
+		        </tr>
+		        <tr>
+		            <td colspan="2" style="padding:10px; border-right: 1px solid #000000;">
+		                <strong>Property Number</strong>
+		            </td>
+		            <td colspan="2" style="padding:10px; border-right: 1px solid #000000;">
+		                <strong>Check box if applicable to parcel</strong>
+		            </td>
+		            <td colspan="2" style="padding:10px; border-right: 1px solid #000000;">
+		                <strong>Complete Address of Property</strong>
+		            </td>
+		            <td colspan="2" style="padding:10px;">
+		                <strong>Complete Tax Billing Address (if different from property address)</strong>
+		            </td>
+		        </tr>
+		        <cfoutput query="dsSDO_Parcels">
+	                <tr>
+	                    <td colspan="2" style="border-top: 1px solid ##000000; border-right: 1px solid ##000000; vertical-align:top; padding:10px; text-align:center;">
+	                        #dsSDO_Parcels.DLGFPin#
+	                    </td>
+	                    <td colspan="2" style="border-top: 1px solid ##000000; border-right: 1px solid ##000000; vertical-align:top; padding:10px;">
+	                        <input type="checkbox" id="DLGFSplit" checked="#dsSDO_Parcels.DLGFSplit#" disabled="disabled" /><strong>Split</strong><br />
+	                        <input type="checkbox" id="DLGFLand" checked="true" disabled="disabled" /><strong>Land</strong><br />
+	                        <input type="checkbox" id="DLGFImprovement" checked="#dsSDO_Parcels.DLGFImprovement#" disabled="disabled" /><strong>Improvement</strong>
+	                    </td>
+	                    <td colspan="2" style="border-top: 1px solid ##000000; border-right: 1px solid ##000000; vertical-align:top; padding:10px;">
+	                        #dsSDO_Parcels.DLGFPropertyStreet#<br />
+	                        #dsSDO_Parcels.DLGFPropertyCity#,&nbsp;
+	                        #dsSDO_Parcels.DLGFPropertyState#&nbsp;&nbsp;
+	                        #dsSDO_Parcels.DLGFPropertyZip#
+	                    </td>
+	                    <td colspan="2" style="border-top: 1px solid ##000000; vertical-align:top; padding: 10px;">
+	                        #dsSDO_Parcels.DLGFTaxBillingStreet#<br />
+	                        #dsSDO_Parcels.DLGFTaxBillingCity#,&nbsp;
+	                        #dsSDO_Parcels.DLGFTaxBillingState#&nbsp;&nbsp;
+	                        #dsSDO_Parcels.DLGFTaxBillingZip#
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td colspan="8" style="border-top: 1px solid ##000000; padding: 10px;">
+	                        <strong>Deductions:</strong>&nbsp;&nbsp;
+	                        <input type="checkbox" id="DeductionHomestead" <cfif ISDEFINED("dsSDO_Parcels.DeductionHomestead") AND dsSDO_Parcels.DeductionHomestead EQ 1>checked='checked'</cfif> disabled="disabled" />Homestead&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                        <input type="checkbox" id="DeductionSolar" <cfif ISDEFINED("dsSDO_Parcels.DeductionSolar") AND dsSDO_Parcels.DeductionSolar EQ 1>checked='checked'</cfif> disabled="disabled" />Solar Energy Heating/Cooling System&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                        <input type="checkbox" id="DeductionWindPower" <cfif ISDEFINED("dsSDO_Parcels.DeductionWindPower") AND dsSDO_Parcels.DeductionWindPower EQ 1>checked='checked'</cfif> disabled="disabled" />Wind Power Device&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                        <input type="checkbox" id="DeductionHydroelectric" <cfif ISDEFINED("dsSDO_Parcels.DeductionHydroelectric") AND dsSDO_Parcels.DeductionHydroelectric EQ 1>checked='checked'</cfif> disabled="disabled" />Hydroelectric Power Device&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                        <input type="checkbox" id="DeductionGeothermal" <cfif ISDEFINED("dsSDO_Parcels.DeductionGeothermal") AND dsSDO_Parcels.DeductionGeothermal EQ 1>checked='checked'</cfif> disabled="disabled" />Geothermal Energy Heating/Cooling Device
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td colspan="8" style="border-top: 1px solid ##000000; padding: 10px;">
+	                        <strong>Is this property a residential rental property?</strong>&nbsp;&nbsp;<input type="checkbox" id="ResidentialRentalProperty" <cfif ISDEFINED("dsSDO_Parcels.ResidentialRentalProperty") AND dsSDO_Parcels.ResidentialRentalProperty EQ 1>checked='checked'</cfif> disabled="disabled" />Yes
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td colspan="8" style="padding:10px; border-top: 1px solid ##000000;">
+	                        <strong>Legal Description of Parcel:</strong>&nbsp;&nbsp;#dsSDO_Parcels.LegalDescription#<br />
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td style="padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;"><strong>AV Land</strong></td>
+	                    <td style="padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;"><strong>AV Improvement</strong></td>
+	                    <td style="padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;"><strong>Value of Personal Property</strong></td>
+	                    <td style="padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;"><strong>AV Total</strong></td>
+	                    <td style="padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;"><strong>Property Class Code</strong></td>
+	                    <td style="padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;"><strong>Neighborhood Code</strong></td>
+	                    <td style="padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;"><strong>Tax</strong></td>
+	                    <td style="padding:10px; border-top: 1px solid ##000000;"><strong>Acreage</strong></td>
+	                </tr>
+	                <tr>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #DOLLARFORMAT(dsSDO_Parcels.DLGFAVLand)#
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #DOLLARFORMAT(dsSDO_Parcels.DLGFAVImprovements)#
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #DOLLARFORMAT(dsSDO_Parcels.DLGFAVPersonalProperty)#
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #DOLLARFORMAT(dsSDO_Parcels.DLGFAVTotal)#
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                    	#dsSDO_Parcels.PropertyClassCode#&nbsp;-&nbsp;
+	                        #dsSDO_Parcels.ClassDescription#
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;"></td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Parcels.DistrictName#<br />
+	                        (#dsSDO_Parcels.TownshipName#)
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Parcels.DLGFParcelAcreage#
+	                    </td>
+	                </tr>
+		        </cfoutput>
+		    </table>
+		    
+		    <cfquery name="dsSDO_Form" dataSource="salesdisclosuresonline">
+		    	SELECT				*
+		    	FROM				[tbl_search_form]
+		    	WHERE				fkSaleID = <cfqueryparam  CFSQLType="CF_SQL_INTEGER" value="#URL.SaleID#">
+		    </cfquery>
+		    
+		    <cfoutput query="dsSDO_Form">
+				<!-- CONTENT -->
+	            <table id="form_section" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="100%" colspan="2" class="text" style="padding:10px;text-align:right; vertical-align:middle; border-bottom:1px solid ##000000;">
+							<table align="right" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;width:300px;">
+								<tr>
+									<td style="text-align:right;vertical-align:middle;"><strong>SDF ID:</strong> #dsSDO_Form.SDFID#</td>
+								</tr>
+								<tr>
+									<td style="text-align:right; vertical-align:middle;">
+										<strong>SDF Date:</strong> #DATEFORMAT(dsSDO_Form.SDFDate, "MM-dd-yyyy")#
+									</td>
+								</tr>
+							</table>
+						</td>
+	                <tr>
+	                    <td width="50%" class="header" style="padding:10px; border-bottom:1px solid ##000000; border-right:1px solid ##000000;">
+	                    	B. CONDITIONS
+	                    </td>
+	                    <td width="50%" class="header" style="padding:10px; border-bottom:1px solid ##000000;">
+	                    	C. SALES DATA
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td style="width:50%; border-right:1px solid ##000000;">
+	                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>If condition 1 applies, filer is subject to disclosure and a disclosure filing fee.</strong>
+	                        
+	                        <table cellpadding="4" cellspacing="0" border="0" style="border-bottom:1px solid ##000000;">
+	                            <tr>
+	                                <td align="center" valign="middle"><strong>YES</strong></td>
+	                                <td align="center" valign="middle"><strong>CONDITION</strong></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFTransferForValuableConsideration") AND dsSDO_Form.DLGFTransferForValuableConsideration EQ 1>checked='checked'</cfif>  id="DLGFTransferForValuableConsideration" disabled="disabled" /></td>
+	                                <td>1. A transfer of real property interest for valuable consideration.</td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFAdjacentPropertyOwner") AND dsSDO_Form.DLGFAdjacentPropertyOwner EQ 1>checked='checked'</cfif>  id="DLGFAdjacentPropertyOwner" disabled="disabled" /></td>
+	                                <td>2. Buyer is an adjacent property owner.</td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFVacant") AND dsSDO_Form.DLGFVacant EQ 1>checked='checked'</cfif>  id="DLGFVacant" disabled="disabled" /></td>
+	                                <td>3. Vacant land.</td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFExchangeOrTrade") AND dsSDO_Form.DLGFExchangeOrTrade EQ 1>checked='checked'</cfif> id="DLGFExchangeOrTrade" disabled="disabled" /></td>
+	                                <td>4. Exchange for other real property ("Trade").</td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFSellerPaidPoints") AND dsSDO_Form.DLGFSellerPaidPoints EQ 1>checked='checked'</cfif> id="DLGFSellerPaidPoints" disabled="disabled" /></td>
+	                                <td>5. Seller paid points. <em>(Provide the value Table C Item 12.)</em></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFPlannedUsageChange") AND dsSDO_Form.DLGFPlannedUsageChange EQ 1>checked='checked'</cfif> id="DLGFPlannedUsageChange" disabled="disabled" /></td>
+	                                <td>6. Change planned in the primary use of the property? <em>(Describe in special circumstances in Table C Item 3.)</em></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFBuyerSellerRelationship") AND dsSDO_Form.DLGFBuyerSellerRelationship EQ 1>checked='checked'</cfif> id="DLGFBuyerSellerRelationship" disabled="disabled" /></td>
+	                                <td>7. Existence of family or business relationship between buyer and seller. <em>(Complete Table C Item 4.)</em></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFLandContract") AND dsSDO_Form.DLGFLandContract EQ 1>checked='checked'</cfif> id="DLGFLandContract" disabled="disabled" /></td>
+	                                <td>
+	                                    8. Land contract. 
+	                                    <cfif dsSDO_Form.DLGFLandContract>
+	                                    	 Contract term <em>(YY)</em>: #dsSDO_Form.DLGFLandContractTerm#<br />
+	                                    	 and contract date <em>(MM/DD/YYYY)</em>: #DATEFORMAT(dsSDO_Form.DLGFLandContractDate, "MM-dd-yyyy")#
+	                                    </cfif>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFPersonalProperty") AND dsSDO_Form.DLGFPersonalProperty EQ 1>checked='checked'</cfif> id="DLGFPersonalProperty" disabled="disabled" /></td>
+	                                <td>9. Personal property included in transfer. <em>(Provide the value Table C Item 5.)</em></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFSignificantChanges") AND dsSDO_Form.DLGFSignificantChanges EQ 1>checked='checked'</cfif> id="DLGFSignificantChanges" disabled="disabled" /></td>
+	                                <td>10. Physical changes to property between March 1 and date of sale. <em>(Describe in special circumstances in Table C Item 3.)</em></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFPartialInterest") AND dsSDO_Form.DLGFPartialInterest EQ 1>checked='checked'</cfif> id="DLGFPartialInterest" disabled="disabled" /></td>
+	                                <td>11. Partial interest. <em>(Describe in special circumstances in Table C Item 3.)</em></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFEasment") AND dsSDO_Form.DLGFEasment EQ 1>checked='checked'</cfif> id="DLGFEasment" disabled="disabled" /></td>
+	                                <td>12. Easements or right-of-way grants.</td>
+	                            </tr>
+	                        </table>
+	                        
+	                        <br />
+	                        
+	                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>If conditions 13-15 apply, filers are subject to disclosure, but no disclosure filing fee.</strong>
+	                        
+	                        <table cellpadding="4" cellspacing="0" border="0">
+	                            <tr>
+	                                <td align="center" valign="middle"><strong>YES</strong></td>
+	                                <td align="center" valign="middle"><strong>CONDITION</strong></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFForeClosure") AND dsSDO_Form.DLGFForeClosure EQ 1>checked='checked'</cfif> id="DLGFForeClosure" disabled="disabled" /></td>
+	                                <td>13. Document for compulsory transactions as a result of foreclosure or express threat of foreclosure, divorce, court order, judgment, condemnation, or probate.</td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFJointTennants") AND dsSDO_Form.DLGFJointTennants EQ 1>checked='checked'</cfif> id="DLGFJointTennants" disabled="disabled" /></td>
+	                                <td>14. Documents involving the partition of land between tenants in common, joint tenants, or tenants by the entirety.</td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFNotForProfit") AND dsSDO_Form.DLGFNotForProfit EQ 1>checked='checked'</cfif> id="DLGFNotForProfit" disabled="disabled" /></td>
+	                                <td>15. Transfer to a charity, not-for-profit organization, or government.</td>
+	                            </tr>
+	                        </table>
+	                    </td>
+	                    <td align="left" valign="top" style="width:50%; padding-top:10px;">
+	                        <span style="display:block;width:190px;padding-left:10px;float:left;">1. Conveyance date (MM/DD/YYYY):</span><strong>#DATEFORMAT(dsSDO_Form.ConveyanceDate, "MM-dd-yyyy")#</strong><br />
+	                        <br />
+	                        <span style="display:block;width:190px;padding-left:10px;float:left;">2. Total number of parcels:</span><strong>#dsSDO_Parcels.RecordCount#</strong><br />
+	                        <br />
+	                        <div style="padding-left:10px; padding-right:10px;">
+	                            3. Describe any unusual or special circumstances related to this sale, including the specification of any less-than-complete ownership interest and terms of seller financing.<br />
+	                            #dsSDO_Form.SpecialComment#
+	                        </div>
+	                        <br />
+	                        
+	                        <table cellpadding="4" cellspacing="0" border="0" style="border-top:1px solid ##000000; border-bottom:1px solid ##000000;">
+	                            <tr>
+	                                <td align="center" valign="middle"><strong>YES</strong></td>
+	                                <td align="center" valign="middle"><strong>CONDITION</strong></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.DLGFBuyerSellerRelationship") AND dsSDO_Form.DLGFBuyerSellerRelationship EQ 1>checked='checked'</cfif> id="DLGFBuyerSellerRelationship2" disabled="disabled" /></td>
+	                                <td>
+	                                    4. Family or business relationship existing between buyer and seller?<br />
+	                                    <br />
+	                                    Amount of discount: #DOLLARFORMAT(dsSDO_Form.BuyerSellerRelationshipDiscount)#<br />
+	                                    <br />
+	                                    <em>Disclose actual value in money, property, a service, an agreement, or other consideration.</em><br />
+	                                    <br />
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td colspan="3" style="border-top:1px solid ##000000;"><span style="display:block;width:190px;padding-left:10px;float:left;">5. Estimated value of personal property:</span><strong>#dsSDO_Form.DLGFPersonalPropertyTotal#</strong></td>
+	                            </tr>
+	                            <tr>
+	                                <td colspan="3" style="border-top:1px solid ##000000;"><span style="display:block;width:190px;padding-left:10px;float:left;">6. Sales price:</span><strong>#DOLLARFORMAT(dsSDO_Form.SalePrice)#</strong></td>
+	                            </tr>
+	                        </table>
+	                        
+	                        <br />
+	                        
+	                        <table cellpadding="4" cellspacing="0" border="0">
+	                            <tr>
+	                                <td align="center" valign="middle"><strong>YES</strong></td>
+	                                <td align="center" valign="middle"><strong>CONDITION</strong></td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.SellerFinancingLoan") AND dsSDO_Form.SellerFinancingLoan EQ 1>checked='checked'</cfif> id="SellerFinancingLoan" disabled="disabled" /></td>
+	                                <td>7. Is the seller financing sale? If yes, answer questions (8-13).</td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.BorrowerLiableForLoan") AND dsSDO_Form.BorrowerLiableForLoan EQ 1>checked='checked'</cfif> id="BorrowerLiableForLoan" disabled="disabled" /></td>
+	                                <td>8. Is buyer/borrower personally liable for loan?</td>
+	                            </tr>
+	                            <tr>
+	                                <td align="center" valign="top" style="width:80px;"><input type="checkbox" <cfif ISDEFINED("dsSDO_Form.MortgageLoan") AND dsSDO_Form.MortgageLoan EQ 1>checked='checked'</cfif> id="MortgageLoan" disabled="disabled" /></td>
+	                                <td>9. Is this a mortgage loan?</td>
+	                            </tr>
+	                            <tr>
+	                                <td colspan="3" style="border-top:1px solid ##000000;"><span style="display:block;width:190px;padding-left:10px;float:left;">10. Amount of loan:</span><strong>#DOLLARFORMAT(dsSDO_Form.AmountOfLoan)#</strong></td>
+	                            </tr>
+	                            <tr>
+	                                <td colspan="3" style="border-top:1px solid ##000000;"><span style="display:block;width:190px;padding-left:10px;float:left;">11. Interest rate:</span><strong>#dsSDO_Form.InterestRate#</strong></td>
+	                            </tr>
+	                            <tr>
+	                                <td colspan="3" style="border-top:1px solid ##000000;"><span style="display:block;width:190px;padding-left:10px;float:left;">12. Amount in points:</span><strong>#dsSDO_Form.DLGFSellerPaidPointsTotal#</strong></td>
+	                            </tr>
+	                            <tr>
+	                                <td colspan="3" style="border-top:1px solid ##000000;"><span style="display:block;width:190px;padding-left:10px;float:left;">13. Amortization period:</span><strong>#dsSDO_Form.AmortizationPeriod#</strong></td>
+	                            </tr>
+	                        </table>
+	                    </td>
+	                </tr>
+	            </table>
+	        
+	            <table id="form_section" cellpadding="0" cellspacing="0" border="0">
+	                <tr>
+	                    <td colspan="2" class="header" style="padding:10px; border-bottom:1px solid ##000000;">D. PREPARER</td>
+	                </tr>
+	                <tr>
+	                    <td style="padding:10px; width: 50%; text-align:center; border-right: 1px solid ##000000;"><strong>Name</strong></td>
+	                    <td style="padding:10px; width: 50%; text-align:center;"><strong>Address</strong></td>
+	                </tr>
+	                <tr>
+	                    <td style="border-top: 1px solid ##000000; border-right: 1px solid ##000000; padding:10px;">
+	                        #dsSDO_Form.DLGFTitleCompanyName#<br />
+	                        #dsSDO_Form.TitleCompanyPreparerFullName#<br />
+	                        #dsSDO_Form.TitleCompanyPreparerTitle#
+	                    </td>
+	                    <td style="border-top: 1px solid ##000000; padding:10px;">
+	                        #dsSDO_Form.TitleCompanyStreet#<br />
+	                        #dsSDO_Form.TitleCompanyCity#,&nbsp;
+	                        #dsSDO_Form.TitleCompanyState#&nbsp;&nbsp;
+	                        #dsSDO_Form.TitleCompanyZip#
+	                    </td>
+	                </tr>
+	            </table>
+		    </cfoutput>
+		        
+		    <cfquery name="dsSDO_Sellers" dataSource="salesdisclosuresonline">
+		        SELECT				*
+		        FROM				[tbl_search_seller]
+		        WHERE				fkSaleID = <cfqueryparam  CFSQLType="CF_SQL_INTEGER" value="#URL.SaleID#">
+		    </cfquery>
+		    
+		    <table id="form_section" cellpadding="0" cellspacing="0" border="0">
+		        <tr>
+		            <td colspan="2" class="header" style="border-bottom:1px solid #000000; padding:10px;">E. SELLER(S)/GRANTOR(S)</td>
+		        </tr>
+		        <tr>
+		            <td style="width: 50%; padding:10px; text-align:center; border-right: 1px solid #000000;"><strong>Name</strong></td>
+		            <td style="width: 50%; padding:10px; text-align:center;"><strong>Address</strong></td>
+		        </tr>
+		        <cfoutput query="dsSDO_Sellers">
+	                <tr>
+	                    <td style="border-top: 1px solid ##000000; border-right: 1px solid ##000000; padding:10px;">
+	                        #dsSDO_Sellers.DLGFSellerFullName#
+	                    </td>
+	                    <td style="border-top: 1px solid ##000000; padding:10px;">
+	                        #dsSDO_Sellers.DLGFSellerStreet#<br />
+	                        #dsSDO_Sellers.DLGFSellerCity#&nbsp;
+	                        #dsSDO_Sellers.DLGFSellerState#&nbsp;&nbsp;
+	                        #dsSDO_Sellers.DLGFSellerZip#
+	                    </td>
+	                </tr>
+		        </cfoutput>
+		    </table>
+		    
+		    <cfquery name="dsSDO_Buyers" dataSource="salesdisclosuresonline">
+		    	SELECT				*
+		    	FROM				[tbl_search_buyer]
+		    	WHERE				fkSaleID = <cfqueryparam  CFSQLType="CF_SQL_INTEGER" value="#URL.SaleID#">
+		    </cfquery>
+		    
+		    <table id="form_section" cellpadding="0" cellspacing="0" border="0">
+		        <tr>
+		            <td class="header" colspan="2" style="border-bottom:1px solid #000000; padding:10px;">F. BUYER(S)/GRANTEE(S)</td>
+		        </tr>
+		        <tr>
+		            <td style="width: 50%; padding:10px; text-align:center; border-right: 1px solid #000000;"><strong>Name</strong></td>
+		            <td style="width: 50%; padding:10px; text-align:center;"><strong>Address</strong></td>
+		        </tr>
+		        <cfoutput query="dsSDO_Buyers">
+	                <tr>
+	                    <td style="border-top: 1px solid ##000000; border-right: 1px solid ##000000; padding:10px;">
+	                        #dsSDO_Buyers.DLGFBuyerFullName#
+	                    </td>
+	                    <td style="border-top: 1px solid ##000000; padding:10px;">
+	                        #dsSDO_Buyers.DLGFBuyerStreet#<br />
+	                        #dsSDO_Buyers.DLGFBuyerCity#,&nbsp;
+	                        #dsSDO_Buyers.DLGFBuyerState#&nbsp;&nbsp;
+	                        #dsSDO_Buyers.DLGFBuyerZip#
+	                    </td>
+	                </tr>
+		        </cfoutput>
+		    </table>
+			
+			
+		    
+		    <cfquery name="dsSDO_Buildings" dataSource="salesdisclosuresonline">
+				SELECT				*
+				FROM				[vwDisplay_Buildings]
+				WHERE				fkSaleID = <cfqueryparam  CFSQLType="CF_SQL_INTEGER" value="#URL.SaleID#">
+		    </cfquery>
+			
+			<table id="form_section" cellpadding="0" cellspacing="0" border="0">
+		        <tr>
+		            <td class="header" colspan="11" style="padding:10px;">G. BUILDINGS</td>
+		        </tr>
+				<tr>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Parcel</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Building</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Occupancy</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Story Height</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Use</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Use Area</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Grade</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Condition</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Year Built</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;"><strong>Area</strong></td>
+					<td style="padding:10px; border-top: 1px solid #000000;text-align:center;"><strong>Finished Area</strong></td>
+				</tr>
+				
+				<cfoutput query="dsSDO_Buildings">
+	            	<tr>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Buildings.DLGFPin#
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+							#dsSDO_Buildings.pkParcelBuildingID#
+						</td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Buildings.Occupancies_Desc_Short#<br />
+	                        (#dsSDO_Buildings.Occupancies_Desc#)
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Buildings.StoryHeightShort#<br />
+	                        (#dsSDO_Buildings.StoryHeightLong#)
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Buildings.UseCode#<br />
+							(#dsSDO_Buildings.UseDescription#)
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Buildings.UseArea#
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Buildings.Grade#
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                    	#dsSDO_Buildings.ConditionCode#<br />
+							(#dsSDO_Buildings.ConditionDescription#)
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+							#dsSDO_Buildings.YearBuilt#
+						</td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Buildings.Area#
+	                    </td>
+	                    <td style="padding:10px; border-top:1px solid ##000000; text-align:center;">
+	                        #dsSDO_Buildings.FinishedArea#
+	                    </td>
+	                </tr>
+		        </cfoutput>
+			</table>
+		</div>
+	</body>
+</html>

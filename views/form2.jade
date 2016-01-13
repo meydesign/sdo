@@ -1,0 +1,528 @@
+doctype html
+html
+  head
+    title Sales Disclosures Online :: Display Form
+    style(type='text/css').
+      div[class="Sect"] {
+      margin			: 0px 30px 0px 30px;
+      }
+      table {
+      color			: #000000;
+      font			: normal 10px/11px 'serif', 'Cambria';
+      }
+      #form_header {
+      width			: 100%;
+      margin			: 0px 0px 10px 0px;
+      color			: #000000;
+      font			: normal 10px/11px 'serif', 'Cambria';
+      }
+      #form_header td.image {
+      width			: 75px;
+      text-align		: center;
+      vertical-align	: middle;
+      }
+      #form_header td.text {
+      width			: auto;
+      text-align		: left;
+      vertical-align	: middle;
+      }
+      #form_section {
+      width			: 100%;
+      margin			: 0px 0px 25px 0px;
+      padding			: 0px 0px 0px 0px;
+      color			: #000000;
+      font			: normal 10px/11px 'serif', 'Cambria';
+      background		: #EEEEEE;
+      border			: 1px solid #000000;
+      }
+      #form_section td {
+      margin			: 0px 0px 0px 0px;
+      padding			: 5px 0px 5px 0px;
+      }
+      #form_section table {
+      width			: 100%;
+      margin			: 0px 0px 0px 0px;
+      color			: #000000;
+      font			: normal 10px/11px 'serif', 'Cambria';
+      }
+      #form_section .header {
+      background		: #CCCCCC;
+      font			: normal 12px/14px 'serif', 'Cambria';
+      }
+  body
+    .Sect
+      //- HEADER
+      table#form_header(cellpadding='0', cellspacing='0', border='0')
+        tr
+          td.image
+            img(width='75', height='72', src='/assets/images/46021_img_0.jpg')
+          td.text
+            | SALES DISCLOSURE FORM
+            br
+            br
+            | Prescribed by Department of Local Government Finance Pursuant to IC 6-1.1-5.5
+            br
+            br
+            strong
+              | PRIVACY NOTICE: The telephone numbers and Social Security numbers of the parties on this form are confidential according to IC 61.15.53(d).
+      //- CONTENT
+      table#form_section(cellpadding='0', cellspacing='0', border='0')
+        tr
+          td.header(colspan='8', style='border-bottom: 1px solid #000000; padding:10px;')
+            | A. PROPERTY TRANSFERRED
+        tr
+          td(colspan='2', style='padding:10px; border-right: 1px solid #000000;')
+            strong Property Number
+          td(colspan='2', style='padding:10px; border-right: 1px solid #000000;')
+            strong Check box if applicable to parcel
+          td(colspan='2', style='padding:10px; border-right: 1px solid #000000;')
+            strong Complete Address of Property
+          td(colspan='2', style='padding:10px;')
+            strong Complete Tax Billing Address (if different from property address)
+        cfoutput(query='dsSDO_Parcels')
+        each dsSDO_Parcels in dsSDO_Parcels_Array
+          tr
+            td(colspan='2', style='border-top: 1px solid ##000000; border-right: 1px solid ##000000; vertical-align:top; padding:10px; text-align:center;')
+              if (dsSDO_Parcels.DLGFPin)
+                | #{dsSDO_Parcels.DLGFPin}
+            td(colspan='2', style='border-top: 1px solid ##000000; border-right: 1px solid ##000000; vertical-align:top; padding:10px;')
+              input#DLGFSplit(type='checkbox', checked= dsSDO_Parcels.DLGFSplit, disabled='disabled')
+              strong Split
+              br
+              input#DLGFLand(type='checkbox', checked='true', disabled='disabled')
+              strong Land
+              br
+              input#DLGFImprovement(type='checkbox', checked= dsSDO_Parcels.DLGFImprovement, disabled='disabled')
+              strong Improvement
+            td(colspan='2', style='border-top: 1px solid ##000000; border-right: 1px solid ##000000; vertical-align:top; padding:10px;')
+              if (dsSDO_Parcels.DLGFPropertyStreet)
+                | #{dsSDO_Parcels.DLGFPropertyStreet}
+              br
+              if (dsSDO_Parcels.DLGFPropertyCity) 
+                | #{dsSDO_Parcels.DLGFPropertyCity},
+              if (dsSDO_Parcels.DLGFPropertyState)
+                | #{dsSDO_Parcels.DLGFPropertyState}
+              if (dsSDO_Parcels.DLGFPropertyZip)
+                | #{dsSDO_Parcels.DLGFPropertyZip}
+            td(colspan='2', style='border-top: 1px solid ##000000; vertical-align:top; padding: 10px;')
+              if (dsSDO_Parcels.DLGFTaxBillingStreet)
+                | #{dsSDO_Parcels.DLGFTaxBillingStreet}
+              br
+              if (dsSDO_Parcels.DLGFTaxBillingCity)
+                | #{dsSDO_Parcels.DLGFTaxBillingCity},
+              if (dsSDO_Parcels.DLGFTaxBillingState)
+                | #{dsSDO_Parcels.DLGFTaxBillingState}
+              if (dsSDO_Parcels.DLGFTaxBillingZip)
+                | #{dsSDO_Parcels.DLGFTaxBillingZip}
+          tr
+            td(colspan='8', style='border-top: 1px solid ##000000; padding: 10px;')
+              strong Deductions:
+              input#DeductionHomestead(type='checkbox', checked=((dsSDO_Parcels.deductionhomestead && dsSDO_Parcels.deductionhomestead == '0') ? 'checked' : 'undefined'), disabled='disabled')
+              | Homestead     
+              input#DeductionSolar(type='checkbox', checked=((dsSDO_Parcels.deductionsolar && dsSDO_Parcels.deductionsolar == '0') ? 'checked' : 'undefined'), disabled='disabled')
+              | Solar Energy Heating/Cooling System     
+              input#DeductionWindPower(type='checkbox', checked=((dsSDO_Parcels.deductionwindpower && dsSDO_Parcels.deductionwindpower == '0') ? 'checked' : 'undefined'), disabled='disabled')
+              | Wind Power Device     
+              input#DeductionHydroelectric(type='checkbox', checked=((dsSDO_Parcels.deductionhydroelectric && dsSDO_Parcels.deductionhydroelectric == '0') ? 'checked' : 'undefined'), disabled='disabled')
+              | Hydroelectric Power Device     
+              input#DeductionGeothermal(type='checkbox', checked=((dsSDO_Parcels.deductiongeothermal && dsSDO_Parcels.deductiongeothermal == '0') ? 'checked' : 'undefined'), disabled='disabled')
+              | Geothermal Energy Heating/Cooling Device
+          tr
+            td(colspan='8', style='border-top: 1px solid ##000000; padding: 10px;')
+              strong Is this property a residential rental property?
+              input#ResidentialRentalProperty(type='checkbox', checked=((dsSDO_Parcels.residentialrentalproperty && dsSDO_Parcels.residentialrentalproperty == '0') ? 'checked' : 'undefined'), disabled='disabled')
+              | Yes
+          tr
+            td(colspan='8', style='padding:10px; border-top: 1px solid ##000000;')
+              strong Legal Description of Parcel:
+              if (dsSDO_Parcels.LegalDescription)
+                | #{dsSDO_Parcels.LegalDescription}
+              br
+          tr
+            td(style='padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;')
+              strong AV Land
+            td(style='padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;')
+              strong AV Improvement
+            td(style='padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;')
+              strong Value of Personal Property
+            td(style='padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;')
+              strong AV Total
+            td(style='padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;')
+              strong Property Class Code
+            td(style='padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;')
+              strong Neighborhood Code
+            td(style='padding:10px; border-top: 1px solid ##000000; border-right: 1px solid ##000000;')
+              strong Tax
+            td(style='padding:10px; border-top: 1px solid ##000000;')
+              strong Acreage
+          tr
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              if (dsSDO_Parcels.DLGFAVLand)
+                | #{dsSDO_Parcels.DLGFAVLand}
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              if (dsSDO_Parcels.DLGFAVImprovements)
+                | #{dsSDO_Parcels.DLGFAVImprovements}
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              if (dsSDO_Parcels.DLGFAVPersonalProperty)
+                | #{dsSDO_Parcels.DLGFAVPersonalProperty}
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              if (dsSDO_Parcels.DLGFAVTotal)
+                | #{dsSDO_Parcels.DLGFAVTotal}
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              if (dsSDO_Parcels.PropertyClassCode)
+                | #{dsSDO_Parcels.PropertyClassCode} -
+              if (dsSDO_Parcels.ClassDescription)
+                | #{dsSDO_Parcels.ClassDescription}
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              if (dsSDO_Parcels.DistrictName)
+                | #{dsSDO_Parcels.DistrictName}
+              br
+              if (dsSDO_Parcels.TownshipName)
+                | (#{dsSDO_Parcels.TownshipName})
+            td(style='padding:10px; border-top:1px solid ##000000; text-align:center;')
+              if (dsSDO_Parcels.DLGFParcelAcreage)
+                | #{dsSDO_Parcels.DLGFParcelAcreage}
+
+        //- CONTENT
+        table#form_section(cellpadding='0', cellspacing='0', border='0')
+          tr
+            td.text(width='100%', colspan='2', style='padding:10px;text-align:right; vertical-align:middle; border-bottom:1px solid ##000000;')
+              table(align='right', cellpadding='0', cellspacing='0', border='0', style='margin:0;padding:0;width:300px;')
+                tr
+                  td(style='text-align:right;vertical-align:middle;')
+                    strong SDF ID:
+                    if (dsSDO_Form.SDFID)
+                      | #{dsSDO_Form.SDFID}
+                tr
+                  td(style='text-align:right; vertical-align:middle;')
+                    strong SDF Date:
+                    if (dsSDO_Form.SDFDate)
+                      | #{dsSDO_Form.SDFDate}
+          tr
+            td.header(width='50%', style='padding:10px; border-bottom:1px solid ##000000; border-right:1px solid ##000000;')
+              | B. CONDITIONS
+            td.header(width='50%', style='padding:10px; border-bottom:1px solid ##000000;')
+              | C. SALES DATA
+          tr
+            td(style='width:50%; border-right:1px solid ##000000;')
+              strong
+                | If condition 1 applies, filer is subject to disclosure and a disclosure filing fee.
+              table(cellpadding='4', cellspacing='0', border='0', style='border-bottom:1px solid ##000000;')
+                tr
+                  td(align='center', valign='middle')
+                    strong YES
+                  td(align='center', valign='middle')
+                    strong CONDITION
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFTransferForValuableConsideration(type='checkbox', checked=((dsSDO_Form.DLGFTransferForValuableConsideration && dsSDO_Form.DLGFTransferForValuableConsideration == true) ? true : false), disabled='disabled')
+                  td 1. A transfer of real property interest for valuable consideration.
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFAdjacentPropertyOwner(type='checkbox', checked=((dsSDO_Form.DLGFAdjacentPropertyOwner && dsSDO_Form.DLGFAdjacentPropertyOwner == true) ? true : false), disabled='disabled')
+                  td 2. Buyer is an adjacent property owner.
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFVacant(type='checkbox', checked=((dsSDO_Form.DLGFVacant && dsSDO_Form.DLGFVacant == true) ? true : false), disabled='disabled')
+                  td 3. Vacant land.
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFExchangeOrTrade(type='checkbox', checked=((dsSDO_Form.DLGFExchangeOrTrade && dsSDO_Form.DLGFExchangeOrTrade == true) ? true : false), disabled='disabled')
+                  td 4. Exchange for other real property ("Trade").
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFSellerPaidPoints(type='checkbox', checked=((dsSDO_Form.DLGFSellerPaidPoints && dsSDO_Form.DLGFSellerPaidPoints == true) ? true : false), disabled='disabled')
+                  td
+                    | 5. Seller paid points. 
+                    em (Provide the value Table C Item 12.)
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFPlannedUsageChange(type='checkbox', checked=((dsSDO_Form.DLGFPlannedUsageChange && dsSDO_Form.DLGFPlannedUsageChange == true) ? true : false), disabled='disabled')
+                  td
+                    | 6. Change planned in the primary use of the property? 
+                    em (Describe in special circumstances in Table C Item 3.)
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFBuyerSellerRelationship(type='checkbox', checked=((dsSDO_Form.DLGFBuyerSellerRelationship && dsSDO_Form.DLGFBuyerSellerRelationship == true) ? true : false), disabled='disabled')
+                  td
+                    | 7. Existence of family or business relationship between buyer and seller. 
+                    em (Complete Table C Item 4.)
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFLandContract(type='checkbox', checked=((dsSDO_Form.DLGFLandContract && dsSDO_Form.DLGFLandContract == true) ? true : false), disabled='disabled')
+                  td
+                    | 8. Land contract. 
+                    if (dsSDO_Form.DLGFLandContract && dsSDO_Form.DLGFLandContract == '')
+                      | Contract term 
+                      em (YY)
+                      if (dsSDO_Form.DLGFLandContractTerm)
+                        | : #{dsSDO_Form.DLGFLandContractTerm}
+                      br
+                      | and contract date 
+                      em (MM/DD/YYYY)
+                      if (dsSDO_Form.DLGFLandContractDate)
+                        | : #{dsSDO_Form.DLGFLandContractDate}
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFPersonalProperty(type='checkbox', checked=((dsSDO_Form.DLGFPersonalProperty && dsSDO_Form.DLGFPersonalProperty == true) ? true : false), disabled='disabled')
+                  td
+                    | 9. Personal property included in transfer. 
+                    em (Provide the value Table C Item 5.)
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFSignificantChanges(type='checkbox', checked=((dsSDO_Form.DLGFSignificantChanges && dsSDO_Form.DLGFSignificantChanges == true) ? true : false), disabled='disabled')
+                  td
+                    | 10. Physical changes to property between March 1 and date of sale. 
+                    em (Describe in special circumstances in Table C Item 3.)
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFPartialInterest(type='checkbox', checked=((dsSDO_Form.DLGFPartialInterest && dsSDO_Form.DLGFPartialInterest == true) ? true : false), disabled='disabled')
+                  td
+                    | 11. Partial interest. 
+                    em (Describe in special circumstances in Table C Item 3.)
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFEasment(type='checkbox', checked=((dsSDO_Form.DLGFEasment && dsSDO_Form.DLGFEasment == true) ? true : false), disabled='disabled')
+                  td 12. Easements or right-of-way grants.
+              br
+              strong
+                | If conditions 13-15 apply, filers are subject to disclosure, but no disclosure filing fee.
+              table(cellpadding='4', cellspacing='0', border='0')
+                tr
+                  td(align='center', valign='middle')
+                    strong YES
+                  td(align='center', valign='middle')
+                    strong CONDITION
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFForeClosure(type='checkbox', checked=((dsSDO_Form.DLGFForeClosure && dsSDO_Form.DLGFForeClosure == true) ? true : false), disabled='disabled')
+                  td
+                    | 13. Document for compulsory transactions as a result of foreclosure or express threat of foreclosure, divorce, court order, judgment, condemnation, or probate.
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFJointTennants(type='checkbox', checked=((dsSDO_Form.DLGFJointTennants && dsSDO_Form.DLGFJointTennants == true) ? true : false), disabled='disabled')
+                  td
+                    | 14. Documents involving the partition of land between tenants in common, joint tenants, or tenants by the entirety.
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFNotForProfit(type='checkbox', checked=((dsSDO_Form.DLGFNotForProfit && dsSDO_Form.DLGFNotForProfit == true) ? true : false), disabled='disabled')
+                  td 15. Transfer to a charity, not-for-profit organization, or government.
+            td(align='left', valign='top', style='width:50%; padding-top:10px;')
+              span(style='display:block;width:190px;padding-left:10px;float:left;') 1. Conveyance date (MM/DD/YYYY):
+              strong 
+                if (dsSDO_Form.ConveyanceDate)
+                  | #{dsSDO_Form.ConveyanceDate}
+              br
+              br
+              span(style='display:block;width:190px;padding-left:10px;float:left;') 2. Total number of parcels:
+              strong 
+                if (dsSDO_Parcels_Array)
+                  | #{dsSDO_Parcels_Array.length}
+              br
+              br
+              div(style='padding-left:10px; padding-right:10px;')
+                | 3. Describe any unusual or special circumstances related to this sale, including the specification of any less-than-complete ownership interest and terms of seller financing.
+                br
+                if (dsSDO_Form.SpecialComment)
+                  | #{dsSDO_Form.SpecialComment}
+              br
+              table(cellpadding='4', cellspacing='0', border='0', style='border-top:1px solid ##000000; border-bottom:1px solid ##000000;')
+                tr
+                  td(align='center', valign='middle')
+                    strong YES
+                  td(align='center', valign='middle')
+                    strong CONDITION
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#DLGFBuyerSellerRelationship2(type='checkbox', checked=((dsSDO_Form.DLGFBuyerSellerRelationship && dsSDO_Form.DLGFBuyerSellerRelationship == true) ? true : false), disabled='disabled')
+
+                  td
+                    | 4. Family or business relationship existing between buyer and seller?
+                    br
+                    br
+                    | Amount of discount:&nbsp; 
+                    if (dsSDO_Form.BuyerSellerRelationshipDiscount) 
+                      | #{dsSDO_Form.BuyerSellerRelationshipDiscount}
+                    br
+                    br
+                    em
+                      | Disclose actual value in money, property, a service, an agreement, or other consideration.
+                    br
+                    br
+                tr
+                  td(colspan='3', style='border-top:1px solid ##000000;')
+                    span(style='display:block;width:190px;padding-left:10px;float:left;') 5. Estimated value of personal property:
+                    strong 
+                      if (dsSDO_Form.DLGFPersonalPropertyTotal) 
+                        | #{dsSDO_Form.DLGFPersonalPropertyTotal}
+                tr
+                  td(colspan='3', style='border-top:1px solid ##000000;')
+                    span(style='display:block;width:190px;padding-left:10px;float:left;') 6. Sales price:
+                    strong 
+                      if (dsSDO_Form.SalePrice)
+                        | #{dsSDO_Form.SalePrice}
+              br
+              table(cellpadding='4', cellspacing='0', border='0')
+                tr
+                  td(align='center', valign='middle')
+                    strong YES
+                  td(align='center', valign='middle')
+                    strong CONDITION
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#SellerFinancingLoan(type='checkbox', checked=((dsSDO_Form.SellerFinancingLoan && dsSDO_Form.SellerFinancingLoan == true) ? true : false), disabled='disabled')
+                  td 7. Is the seller financing sale? If yes, answer questions (8-13).
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#BorrowerLiableForLoan(type='checkbox', checked=((dsSDO_Form.BorrowerLiableForLoan && dsSDO_Form.BorrowerLiableForLoan == true) ? true : false), disabled='disabled')
+                  td 8. Is buyer/borrower personally liable for loan?
+                tr
+                  td(align='center', valign='top', style='width:80px;')
+                    input#MortgageLoan(type='checkbox', checked=((dsSDO_Form.DLGFBuyerSellerRelationship && dsSDO_Form.DLGFBuyerSellerRelationship == true) ? true : false), disabled='disabled')
+                  td 9. Is this a mortgage loan?
+                tr
+                  td(colspan='3', style='border-top:1px solid ##000000;')
+                    span(style='display:block;width:190px;padding-left:10px;float:left;') 10. Amount of loan:
+                    if (dsSDO_Form.AmountOfLoan)
+                      strong #{dsSDO_Form.AmountOfLoan}
+                tr
+                  td(colspan='3', style='border-top:1px solid ##000000;')
+                    span(style='display:block;width:190px;padding-left:10px;float:left;') 11. Interest rate:
+                    if (dsSDO_Form.InterestRate)
+                      strong #{dsSDO_Form.InterestRate}
+                tr
+                  td(colspan='3', style='border-top:1px solid ##000000;')
+                    span(style='display:block;width:190px;padding-left:10px;float:left;') 12. Amount in points:
+                    if (dsSDO_Form.DLGFSellerPaidPointsTotal)
+                      strong #{dsSDO_Form.DLGFSellerPaidPointsTotal}
+                tr
+                  td(colspan='3', style='border-top:1px solid ##000000;')
+                    span(style='display:block;width:190px;padding-left:10px;float:left;') 13. Amortization period:
+                    if (dsSDO_Form.AmortizationPeriod)
+                      strong #{dsSDO_Form.AmortizationPeriod}
+        table#form_section(cellpadding='0', cellspacing='0', border='0')
+          tr
+            td.header(colspan='2', style='padding:10px; border-bottom:1px solid ##000000;') D. PREPARER
+          tr
+            td(style='padding:10px; width: 50%; text-align:center; border-right: 1px solid ##000000;')
+              strong Name
+            td(style='padding:10px; width: 50%; text-align:center;')
+              strong Address
+          tr
+            td(style='border-top: 1px solid ##000000; border-right: 1px solid ##000000; padding:10px;')
+              if (dsSDO_Form.DLGFTitleCompanyName)
+                | #{dsSDO_Form.DLGFTitleCompanyName}
+              br
+              if (dsSDO_Form.TitleCompanyPreparerFullName)
+                | #{dsSDO_Form.TitleCompanyPreparerFullName}
+              br
+              if (dsSDO_Form.TitleCompanyPreparerTitle)
+                | #{dsSDO_Form.TitleCompanyPreparerTitle}
+            td(style='border-top: 1px solid ##000000; padding:10px;')
+              if (dsSDO_Form.TitleCompanyStreet)
+                | #{dsSDO_Form.TitleCompanyStreet}
+              br
+              if (dsSDO_Form.TitleCompanyCity)
+                | #{dsSDO_Form.TitleCompanyCity},
+              if (dsSDO_Form.TitleCompanyState)  
+                | #{dsSDO_Form.TitleCompanyState}
+              if (dsSDO_Form.TitleCompanyZip)  
+                | #{dsSDO_Form.TitleCompanyZip}
+      
+      table#form_section(cellpadding='0', cellspacing='0', border='0')
+        tr
+          td.header(colspan='2', style='border-bottom:1px solid #000000; padding:10px;') E. SELLER(S)/GRANTOR(S)
+        tr
+          td(style='width: 50%; padding:10px; text-align:center; border-right: 1px solid #000000;')
+            strong Name
+          td(style='width: 50%; padding:10px; text-align:center;')
+            strong Address
+        cfoutput(query='dsSDO_Sellers')
+          tr
+            td(style='border-top: 1px solid ##000000; border-right: 1px solid ##000000; padding:10px;')
+              | #dsSDO_Sellers.DLGFSellerFullName#
+            td(style='border-top: 1px solid ##000000; padding:10px;')
+              | #dsSDO_Sellers.DLGFSellerStreet#
+              br
+              | 	                        #dsSDO_Sellers.DLGFSellerCity#
+              | 	                        #dsSDO_Sellers.DLGFSellerState#
+              | 	                        #dsSDO_Sellers.DLGFSellerZip#
+
+      table#form_section(cellpadding='0', cellspacing='0', border='0')
+        tr
+          td.header(colspan='2', style='border-bottom:1px solid #000000; padding:10px;') F. BUYER(S)/GRANTEE(S)
+        tr
+          td(style='width: 50%; padding:10px; text-align:center; border-right: 1px solid #000000;')
+            strong Name
+          td(style='width: 50%; padding:10px; text-align:center;')
+            strong Address
+        cfoutput(query='dsSDO_Buyers')
+          tr
+            td(style='border-top: 1px solid ##000000; border-right: 1px solid ##000000; padding:10px;')
+              | #dsSDO_Buyers.DLGFBuyerFullName#
+            td(style='border-top: 1px solid ##000000; padding:10px;')
+              | #dsSDO_Buyers.DLGFBuyerStreet#
+              br
+              | 	                        #dsSDO_Buyers.DLGFBuyerCity#,
+              | 	                        #dsSDO_Buyers.DLGFBuyerState#
+              | 	                        #dsSDO_Buyers.DLGFBuyerZip#
+
+      table#form_section(cellpadding='0', cellspacing='0', border='0')
+        tr
+          td.header(colspan='11', style='padding:10px;') G. BUILDINGS
+        tr
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Parcel
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Building
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Occupancy
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Story Height
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Use
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Use Area
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Grade
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Condition
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Year Built
+          td(style='padding:10px; border-top: 1px solid #000000; border-right: 1px solid #000000;text-align:center;')
+            strong Area
+          td(style='padding:10px; border-top: 1px solid #000000;text-align:center;')
+            strong Finished Area
+        cfoutput(query='dsSDO_Buildings')
+          tr
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.DLGFPin#
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.pkParcelBuildingID#
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.Occupancies_Desc_Short#
+              br
+              | 	                        (#dsSDO_Buildings.Occupancies_Desc#)
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.StoryHeightShort#
+              br
+              | 	                        (#dsSDO_Buildings.StoryHeightLong#)
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.UseCode#
+              br
+              | 							(#dsSDO_Buildings.UseDescription#)
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.UseArea#
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.Grade#
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.ConditionCode#
+              br
+              | 							(#dsSDO_Buildings.ConditionDescription#)
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.YearBuilt#
+            td(style='padding:10px; border-top:1px solid ##000000; border-right:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.Area#
+            td(style='padding:10px; border-top:1px solid ##000000; text-align:center;')
+              | #dsSDO_Buildings.FinishedArea#

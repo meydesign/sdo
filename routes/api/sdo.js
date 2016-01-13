@@ -5,7 +5,6 @@ var sql = require('../../controllers/mssql');
 router.post('/table', function tableGet(req, res, next) {
   var sqlQuery = 'SELECT DISTINCT TOP 1000 pkSaleID, DLGFPin, convert(varchar, ConveyanceDate, 101) AS ConveyanceDate, SalePrice, DLGFBuyerFullName, DLGFSellerFullName, CountyName, GISAddress, PinGIS, DLGFPropertyAddress, LegalDescription, occupancyDescription, gradesGrade, StoryHeightShort, Area, ConditionCode, YearBuilt, FinishedArea FROM searchForm_v3_advanced WHERE 1 = 1';
 
-  console.log(req.body);
   // PRIORITY 1 - SDO/SDF ID
   if ((req.body.sdoId) || (req.body.sdfId)) {
     if (req.body.sdoId !== '') {
@@ -142,7 +141,7 @@ router.post('/table', function tableGet(req, res, next) {
     var jsonResponse = {
       aaData: [],
     };
-
+    
     if (err) {
       res.json(jsonResponse);
       return;

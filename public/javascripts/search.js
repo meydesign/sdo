@@ -33,34 +33,59 @@ $(document).ready(function docReadyCallback() {
   // });
 
   $('input[name="parcel"]').inputmask('99-99-99-999-999.999-999');
-  $('input[name="transfer-date-from"]').inputmask('date');
-  $('input[name="transfer-date-to"]').inputmask('date');
-  $('input[name="sold-date-from"]').inputmask('date');
-  $('input[name="sold-date-to"]').inputmask('date');
-  $('input[name="sold-price-from"]').inputmask('currency');
-  $('input[name="sold-price-to"]').inputmask('currency');
+  $('input[name="transfer_date_from"]').inputmask('date');
+  $('input[name="transfer_date_to"]').inputmask('date');
+  $('input[name="sold_date_from"]').inputmask('date');
+  $('input[name="sold_date_to"]').inputmask('date');
+  $('input[name="sold_price_from"]').inputmask('currency');
+  $('input[name="sold_price_to"]').inputmask('currency');
+
+  $('#search_form input[type="text"]').tooltipster({
+    trigger: 'custom',
+    onlyOne: false,
+    theme: 'tooltipster-punk',
+    position: 'bottom',
+  });
 
   $('#search_form').validate({
-    errorElement: 'span',
+    // errorElement: 'span',
     errorClass: 'help-block',
+    validClass: '',
     focusInvalid: false,
     rules: {
       sdoId: {
         number: true,
+        maxlength: 9,
       },
-      sdfId: {},
+      sdfId: {
+        maxlength: 14,
+      },
       parcel: {
-        number: true,
+        maxlength: 26,
       },
       legacy_parcel: {
         number: true,
       },
       sold_price_from: {},
       sold_price_to: {},
-      sold_date_from: {},
-      sold_date_to: {},
-      transfer_date_from: {},
-      transfer_date_to: {},
+      sold_date_from: {
+        date: true,
+      },
+      sold_date_to: {
+        date: true,
+      },
+      transfer_date_from: {
+        date: true,
+      },
+      transfer_date_to: {
+        date: true,
+      },
+      search_prop_zip_1: {
+        maxlength: 5,
+      },
+      search_prop_zip_2: {
+        maxlength: 4,
+      },
     },
     messages: {
       sdoId: {},
@@ -74,11 +99,18 @@ $(document).ready(function docReadyCallback() {
       transfer_date_from: {},
       transfer_date_to: {},
     },
-    highlight: function highlistFn(label) {
-      $(label).closest('.form-group').addClass('has-error');
+    highlight: function highlistFn(element) {
+      $(element).closest('.form-group').addClass('has-error');
+    },
+    errorPlacement: function errorPlacementFn(error, element) {
+      $(element).tooltipster('update', error.text());
+      $(element).tooltipster('show');
+    },
+    success: function successFn(label, element) {
+      $(element).closest('.form-group').removeClass('has-error');
+      $(element).tooltipster('hide');
     },
     submitHandler: function submitCallback() {
-      alert('form submitted');
       searchTable.ajax.reload();
       return;
     },
@@ -152,7 +184,7 @@ $(document).ready(function docReadyCallback() {
           data: 'DLGPin',
           className: 'all dt-col-nowrap',
           render: function renderFn(data, type, full) {
-            return '<a href="#" target="_blank">' + full.DLGFPin + '</a><br /><br />' + full.DLGFPropertyAddress;
+            return '<a href="/sdo/form/' + full.pkSaleID + '" target="_blank">' + full.DLGFPin + '</a><br /><br />' + full.DLGFPropertyAddress;
           },
         },
         {
